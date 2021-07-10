@@ -28,31 +28,15 @@ Future<int> save(Contact contact) async {
 Future<List<Contact>> findAll() async {
   final Database database = await getDatabase();
   final List<Map<String, dynamic>> result = await database.query('contacts');
+  final List<Contact> contacts = [];
 
-  for (Map<String, dynamic> map in maps) {
+  for (Map<String, dynamic> row in result) {
     final Contact contact = Contact(
-      map['id'],
-      map['name'],
-      map['account_number'],
+      row['id'],
+      row['name'],
+      row['account_number'],
     );
     contacts.add(contact);
   }
   return contacts;
-
-  // return createDatabase().then((database) {
-  // return database.query('contacts').then(
-  // (maps) {
-  // final List<Contact> contacts = [];
-  // for (Map<String, dynamic> map in maps) {
-  // final Contact contact = Contact(
-  // map['id'],
-  // map['name'],
-  // map['account_number'],
-  // );
-  // contacts.add(contact);
-  // }
-  // return contacts;
-  // },
-  // );
-  // });
 }
