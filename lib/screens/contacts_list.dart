@@ -72,8 +72,9 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final ContactDao _dao = ContactDao();
 
-  const _ContactItem(this.contact);
+  _ContactItem(this.contact);
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +87,15 @@ class _ContactItem extends StatelessWidget {
         subtitle: Text(
           contact.accountNumber.toString(),
           style: TextStyle(fontSize: 16),
+        ),
+        trailing: GestureDetector(
+          onTap: () {
+            _dao.delete(this.contact.id);
+          },
+          child: Icon(
+            Icons.delete,
+            color: Colors.red[400],
+          ),
         ),
       ),
     );
